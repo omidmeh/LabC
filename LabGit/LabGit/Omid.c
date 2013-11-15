@@ -287,6 +287,13 @@ void printLatch(latch* lat, short printTitle){
 
 }
 
+void printAllLatch(){
+	printLatch(&IF_ID, 1);
+	printLatch(&ID_EXE, 0);
+	printLatch(&EXE_MEM, 0);
+	printLatch(&MEM_WB, 0);
+}
+
 int isNumeric(const char * s) {
 	if (s == NULL || *s == '\0' || *s == ' ')
 		return 0;

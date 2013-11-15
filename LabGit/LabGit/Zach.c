@@ -17,7 +17,7 @@ void IF()
 	}
 
 	if (IF_ID.branchPendingFlag == 2) return;
-	if (IF_ID.writable == 1) return;
+	if (IF_ID.writable == 0) return;
 
 	int nextInstruction;
 
@@ -44,6 +44,9 @@ void ID()
 
 	if (ID_EXE.halt == HALT) return;     //  halted
 	if (ID_EXE.writable == 0)    return;     //  not writable
+	if (IF_ID.writable == 1) return;		//No new Data
+
+	IF_ID.writable = 1;
 
 	switch (opcode)
 	{
@@ -52,7 +55,7 @@ void ID()
 	case(MULT) :
 			  {
 				  if (regfile[rs][1] == 1) return;
-				  if (regfile[rd][1] == 1) return;
+				  if (regfile[rt][1] == 1) return;
 
 				  regfile[rd][1] = 1;
 

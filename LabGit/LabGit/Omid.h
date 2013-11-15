@@ -10,9 +10,10 @@ int regToInt(char* s);
 int terminate();
 
 void testEXE();
-void printLatch(latch* lat, short printTitle);
 void MEM();
 
+void printLatch(latch* lat, short printTitle);
+void printAllLatch();
 
 
 #endif // !OMID_H

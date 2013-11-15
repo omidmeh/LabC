@@ -33,6 +33,8 @@ int main(int argc, char* argv[]) {
 
 	puts(progScanner(file));
 
+	
+
 	instr* ptr = instructionMem;
 	while ((*ptr).opcode != HALT) {
 		printf("OPCODE: %2d, RS: %2d, RT: %2d, RD: %2d, IMM: %d\n",
@@ -42,19 +44,36 @@ int main(int argc, char* argv[]) {
 
 	//testEXE();
 	//zachTest();
-	testMEM();
+	//testMEM();
+
+	pipeline();
 
 	scanf("press enter");
 	return 0;
 }
 
 void pipeline(){
+
+	IF_ID.writable = 1;
+	ID_EXE.writable = 1;
+	EXE_MEM.writable = 1;
+	MEM_WB.writable = 1;
+
+	printAllLatch();
 	while (eoSimulation == 0){
+		//printAllLatch();
 		WB();
+		printAllLatch();
 		MEM();
+		printAllLatch();
 		EXE();
+		printAllLatch();
 		ID();
+		printAllLatch();
 		IF();
+		//ID_EXE.writable = 1;
+		printAllLatch();
+		puts("\n\n\n");
 	}
 
 	return;

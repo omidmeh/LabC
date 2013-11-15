@@ -160,6 +160,8 @@ void testMEM(){
 	regfile[EXE_MEM.regDest][1] = 1;
 	memory[EXE_MEM.readData1] = 31;
 
+	printAllLatch();
+
 	printf("RegFile[%d][1]={%d,%d}\n", EXE_MEM.regDest,
 		regfile[EXE_MEM.regDest][0], regfile[EXE_MEM.regDest][1]);
 	printf("Memory[%d]=%d]\n", EXE_MEM.readData1, memory[EXE_MEM.readData1]);
@@ -171,6 +173,9 @@ void testMEM(){
 	printLatch(&MEM_WB, 0);
 	MEM();
 	printLatch(&MEM_WB, 0);
+
+	printAllLatch();
+
 
 	printf("RegFile[%d][1]={%d,%d}\n", EXE_MEM.regDest,
 		regfile[EXE_MEM.regDest][0], regfile[EXE_MEM.regDest][1]);
