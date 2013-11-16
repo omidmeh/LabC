@@ -14,10 +14,10 @@
 #endif
 
 
-char* file = "file.txt";
-MEM_ACCESS_TIME = 1;
-EXE_MULT_TIME = 1;
-EXE_OP_TIME = 1;
+char* file = "prog1.asy";
+EXE_MULT_TIME   = 1;	//m
+EXE_OP_TIME     = 4;	//n
+MEM_ACCESS_TIME = 1;	//c
 
 //Function Declaration
 void pipeline();
@@ -61,29 +61,28 @@ void pipeline(){
 	EXE_MEM.writable = 1;
 	MEM_WB.writable = 1;
 
-	regfile[2][0] = 7;
 
-	printAllLatch();
+	regfile[4][0] = 5;
+	regfile[5][0] = 5;
+
+	clk = 0;
 	while (eoSimulation == 0){
-		//printAllLatch();
-		WB();
-		//printAllLatch();
+		WB(); 
 		MEM();
-		//printAllLatch();
 		EXE();
+		ID(); 
+		IF(); 
 		//printAllLatch();
-		ID();
-		//printAllLatch();
-		IF();
-		//ID_EXE.writable = 1;
-		printAllLatch();
-		puts("\n\n\n");
+
+		//puts("\n\n\n");
+		if (MEM_WB.halt == 0) clk++;
 	}
 
-	printf("IF_tally = %d\n" , IF_tally);
-	printf("ID_tally = %d\n" , ID_tally);
+	printf("IF_tally  = %d\n" , IF_tally);
+	printf("ID_tally  = %d\n" , ID_tally);
 	printf("EXE_tally = %d\n", EXE_tally);
 	printf("MEM_tally = %d\n", MEM_tally);
-	printf("WB_tally = %d\n" , WB_tally);
+	printf("WB_tally  = %d\n", WB_tally);
+	printf("Cycle #   = %d\n", clk);
 	return;
 }

@@ -92,8 +92,7 @@ void ID()
 			 {
 				 if (regfile[rs][1] == 1) return;
 
-				 int temp = regfile[rs][0] % 4;
-				 assert(temp == 0);
+				 assert(regfile[rs][0] % 4 == 0);
 
 				 regfile[rt][1] = 1;
 
@@ -114,8 +113,7 @@ void ID()
 				 if (regfile[rt][1] == 1)  return;
 				 if (regfile[rs][1] == 1) return;
 
-				 int temp = regfile[rs][0] % 4;
-				 assert(temp == 0);
+				 assert(regfile[rs][0] % 4 == 0);
 
 				 ID_EXE.opcode = opcode;
 				 ID_EXE.regDest = 0;
@@ -174,11 +172,11 @@ void ID()
 
 	IF_ID.writable = 1;
 
-	printf("IF_ID.opcode = %d \n", ID_EXE.opcode);
-	printf("IF_ID.regDest = %d \n", ID_EXE.regDest);
-	printf("IF_ID.readData1 = %d \n", ID_EXE.readData1);
-	printf("IF_ID.readData2 = %d \n", ID_EXE.readData2);
-	printf("IF_ID.immediate = %d \n", ID_EXE.immediate);
+	//printf("IF_ID.opcode = %d \n", ID_EXE.opcode);
+	//printf("IF_ID.regDest = %d \n", ID_EXE.regDest);
+	//printf("IF_ID.readData1 = %d \n", ID_EXE.readData1);
+	//printf("IF_ID.readData2 = %d \n", ID_EXE.readData2);
+	//printf("IF_ID.immediate = %d \n", ID_EXE.immediate);
 }
 
 void EXE()
@@ -361,6 +359,7 @@ void updateEXE_MEM()
 				  EXE_MEM.readData2 = readData2;              //  M[rt]
 				  EXE_MEM.immediate = immediate;
 
+				  if (EXE_MEM.readData1 == EXE_MEM.readData2)
 				  if (readData1 == readData2)
 				  {
 					  //set branch offset to immediate

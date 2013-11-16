@@ -1,4 +1,7 @@
-      addi  $1, $2, -13
-      addi  $1, $1, -13
+      addi $4, $0, 20
+      addi $5, $0, 50
+      beq $4, $5, 1
+      addi $10, $0, 25
+      addi $11, $0, 50
 
       haltSimulation

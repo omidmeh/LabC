@@ -265,35 +265,6 @@ instr Parser(char* instruction) {
 	return tempinstruct;
 }
 
-
-void printLatch(latch* lat, short printTitle){
-
-
-	if (printTitle == 1)
-		printf("BPend  halt  wable  op  rData1  rData2  Dest  imm  ALURes  Pr  PC\n");
-	printf("%5d  %4d  %5d  %2d  %6d  %6d  %4d %3d  %6d  %3d  %2d\n",
-		(*lat).branchPendingFlag,
-		(*lat).halt,
-		(*lat).writable,
-		(*lat).opcode,
-		(*lat).readData1,
-		(*lat).readData2,
-		(*lat).regDest,
-		(*lat).immediate,
-		(*lat).ALUresult,
-		(*lat).processed,
-		(*lat).PC
-		);
-
-}
-
-void printAllLatch(){
-	printLatch(&IF_ID, 1);
-	printLatch(&ID_EXE, 0);
-	printLatch(&EXE_MEM, 0);
-	printLatch(&MEM_WB, 0);
-}
-
 int isNumeric(const char * s) {
 	if (s == NULL || *s == '\0' || *s == ' ')
 		return 0;
@@ -325,6 +296,34 @@ int regToInt(char* s) {
 	printf("Register name undefined: %s", s);
 	terminate();
 	return -1;
+}
+
+void printLatch(latch* lat, short printTitle){
+
+
+	if (printTitle == 1)
+		printf("BPend  halt  wable  op  rData1  rData2  Dest  imm  ALURes  Pr  PC\n");
+	printf("%5d  %4d  %5d  %2d  %6d  %6d  %4d %3d  %6d  %3d  %2d\n",
+		(*lat).branchPendingFlag,
+		(*lat).halt,
+		(*lat).writable,
+		(*lat).opcode,
+		(*lat).readData1,
+		(*lat).readData2,
+		(*lat).regDest,
+		(*lat).immediate,
+		(*lat).ALUresult,
+		(*lat).processed,
+		(*lat).PC
+		);
+
+}
+
+void printAllLatch(){
+	printLatch(&IF_ID, 1);
+	printLatch(&ID_EXE, 0);
+	printLatch(&EXE_MEM, 0);
+	printLatch(&MEM_WB, 0);
 }
 
 int terminate(){

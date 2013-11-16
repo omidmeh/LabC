@@ -9,7 +9,11 @@ void updateMEM_WB(){
 	{
 	case(SW) :
 			 {
-				 memory[EXE_MEM.readData2] = EXE_MEM.readData1;
+				 assert(EXE_MEM.readData2 % 4 == 0);
+				 assert((EXE_MEM.readData2 / 4) < 512 &&
+						(EXE_MEM.readData2 / 4) >= 0);
+
+				 memory[EXE_MEM.readData2 / 4] = EXE_MEM.readData1;
 
 				 MEM_WB.opcode = EXE_MEM.opcode;
 				 MEM_WB.regDest = 0;
@@ -29,11 +33,16 @@ void updateMEM_WB(){
 	case(LW) :
 			 {
 				
-				 regfile[EXE_MEM.regDest][0] = memory[EXE_MEM.readData1];
-				 regfile[EXE_MEM.regDest][1] = 0;
+				 //regfile[EXE_MEM.regDest][0] = memory[EXE_MEM.readData1];
+				// regfile[EXE_MEM.regDest][1] = 0;
+
+				 assert((EXE_MEM.readData1) % 4 == 0);
+				 assert((EXE_MEM.readData1 / 4) < 512 &&
+						(EXE_MEM.readData1 / 4) >= 0);
+
 				 MEM_WB.opcode = EXE_MEM.opcode;
-				 MEM_WB.regDest = 0;
-				 MEM_WB.readData1 = 0;
+				 MEM_WB.regDest = EXE_MEM.regDest;
+				 MEM_WB.readData1 = memory[(EXE_MEM.readData1)/4];
 				 MEM_WB.readData2 = 0;
 				 MEM_WB.immediate = 0;
 				 MEM_WB.ALUresult = 0;
@@ -95,16 +104,16 @@ void updateMEM_WB(){
 			}
 	case(BEQ) :
 			  {
-				  EXE_MEM.opcode = EXE_MEM.opcode;
+				  MEM_WB.opcode = EXE_MEM.opcode;
 				  MEM_WB.regDest = 0;
 				  MEM_WB.readData1 = EXE_MEM.readData1;
 				  MEM_WB.readData2 = EXE_MEM.readData2;
 				  MEM_WB.immediate = EXE_MEM.immediate;
 
 				  MEM_WB.branchPendingFlag = 0; //0 or 1?
-				  EXE_MEM.branchPendingFlag = 1; //do I need to set this equal to smth?
+				  //EXE_MEM.branchPendingFlag = 1; //do I need to set this equal to smth?
 				  MEM_WB.writable = 0;
-
+				  EXE_MEM.writable = 1;
 				  // MEM_tally++;
 				  break;
 			}
@@ -207,7 +216,7 @@ void WB(){
 
 		case (LW) :
 				  {
-					  assert(regfile[MEM_WB.regDest][1] == 1);
+					  //assert(regfile[MEM_WB.regDest][1] == 1);
 					  regfile[MEM_WB.regDest][0] = MEM_WB.readData1;
 					  regfile[MEM_WB.regDest][1] = 0;
 					  WB_tally++;
@@ -225,7 +234,7 @@ void WB(){
 					   break;
 	   }
 
-		case (BEQ) :
+		case (BEQ) : 
 		case (SW) : { break; }
 
 		case (HALT) : {
