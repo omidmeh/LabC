@@ -127,9 +127,21 @@ void updateMEM_WB(){
 			   {
 				   assert(IF_ID.halt == 1);
 				   assert(ID_EXE.halt == 1);
-				   assert(EXE_MEM.halt == 1);
-				   MEM_WB.halt = 1;
-				   eoSimulation = 0; //endOfSimulation =0
+				   //assert(EXE_MEM.halt == 1);
+				   //MEM_WB.halt = 1;
+				   EXE_MEM.halt = 1;
+				   //eoSimulation = 0; //endOfSimulation =0
+
+				   MEM_WB.opcode = EXE_MEM.opcode;
+				   MEM_WB.regDest = 0;
+				   MEM_WB.readData1 = 0;
+				   MEM_WB.readData2 = 0;
+				   MEM_WB.immediate = 0;
+				   MEM_WB.ALUresult = EXE_MEM.ALUresult;
+
+				   EXE_MEM.writable = 0;
+				   MEM_WB.writable = 0;
+
 				   break;
 
 						  }
@@ -187,7 +199,8 @@ void WB(){
 
 	if (MEM_WB.writable == 1) return;
 	else{
-
+	
+		MEM_WB.writable = 1;
 		switch (MEM_WB.opcode)
 		{
 			//for halt beq and sw do nothing 
@@ -219,7 +232,8 @@ void WB(){
 			assert(IF_ID.halt == 1);
 			assert(ID_EXE.halt == 1);
 			assert(EXE_MEM.halt == 1);
-			assert(MEM_WB.halt == 1);
+			//assert(MEM_WB.halt == 1);
+			MEM_WB.halt = 1;
 			eoSimulation = 1;
 			break;
 		   }

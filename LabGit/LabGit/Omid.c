@@ -57,7 +57,7 @@ void testEXE(){
 
 void MEM(){
 	if (EXE_MEM.writable == 1)	return; //Old Data
-	if (MEM_WB.halt == 1)		return;
+	if (EXE_MEM.halt == 1)		return;
 	if (EXE_MEM.processed == 0){
 		if (memTimeRemaining == 0)
 		{

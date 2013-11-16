@@ -41,6 +41,8 @@ int main(int argc, char* argv[]) {
 			(*ptr).opcode, (*ptr).rs, (*ptr).rt, (*ptr).rd, (*ptr).immediate);
 		ptr++;
 	}
+	printf("OPCODE: %2d, RS: %2d, RT: %2d, RD: %2d, IMM: %d\n",
+		(*ptr).opcode, (*ptr).rs, (*ptr).rt, (*ptr).rd, (*ptr).immediate);
 
 	//testEXE();
 	//zachTest();
@@ -59,22 +61,29 @@ void pipeline(){
 	EXE_MEM.writable = 1;
 	MEM_WB.writable = 1;
 
+	regfile[2][0] = 7;
+
 	printAllLatch();
 	while (eoSimulation == 0){
 		//printAllLatch();
 		WB();
-		printAllLatch();
+		//printAllLatch();
 		MEM();
-		printAllLatch();
+		//printAllLatch();
 		EXE();
-		printAllLatch();
+		//printAllLatch();
 		ID();
-		printAllLatch();
+		//printAllLatch();
 		IF();
 		//ID_EXE.writable = 1;
 		printAllLatch();
 		puts("\n\n\n");
 	}
 
+	printf("IF_tally = %d\n" , IF_tally);
+	printf("ID_tally = %d\n" , ID_tally);
+	printf("EXE_tally = %d\n", EXE_tally);
+	printf("MEM_tally = %d\n", MEM_tally);
+	printf("WB_tally = %d\n" , WB_tally);
 	return;
 }

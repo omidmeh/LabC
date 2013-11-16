@@ -29,7 +29,7 @@ void IF()
 
 	PC = (nextInstruction + 1);
 
-	IF_tally++;
+	if (instructionMem[nextInstruction].opcode != HALT) IF_tally++;
 
 	IF_ID.writable = 0;
 }
@@ -42,11 +42,12 @@ void ID()
 	int    rd = instructionMem[IF_ID.PC].rd;
 	int    immediate = instructionMem[IF_ID.PC].immediate;
 
-	if (ID_EXE.halt == HALT) return;     //  halted
+	//if (ID_EXE.halt == HALT) return;     //  halted
+	if (IF_ID.halt == 1) return;     //  halted
 	if (ID_EXE.writable == 0)    return;     //  not writable
 	if (IF_ID.writable == 1) return;		//No new Data
 
-	IF_ID.writable = 1;
+	
 
 	switch (opcode)
 	{
@@ -148,8 +149,20 @@ void ID()
 		}
 	case(HALT) :
 			   {
-				   assert(IF_ID.halt == 1);
-				   ID_EXE.halt = 1;
+				   //assert(IF_ID.halt == 1);
+				   //ID_EXE.halt = 1;
+
+				   ID_EXE.opcode = opcode;
+				   ID_EXE.regDest = 0;
+				   ID_EXE.readData1 = 0;
+				   ID_EXE.readData2 = 0;
+				   ID_EXE.immediate = 0;
+
+				   IF_ID.writable = 0;
+				   IF_ID.branchPendingFlag = 0;
+				   ID_EXE.writable = 0;
+
+				   IF_ID.halt = 1;
 				   break;
 		}
 	default:
@@ -158,6 +171,8 @@ void ID()
 			terminate();
 		   }
 	}
+
+	IF_ID.writable = 1;
 
 	printf("IF_ID.opcode = %d \n", ID_EXE.opcode);
 	printf("IF_ID.regDest = %d \n", ID_EXE.regDest);
@@ -168,7 +183,8 @@ void ID()
 
 void EXE()
 {
-	if (EXE_MEM.opcode == HALT) return;
+	//if (EXE_MEM.opcode == HALT) return;
+	if (ID_EXE.halt == 1) return;
 	if (ID_EXE.writable == 1)    return;
 	if (ID_EXE.processed == 0)
 	{
@@ -179,6 +195,7 @@ void EXE()
 			case(MULT) :
 					   {
 						   exeTimeRemaining = EXE_MULT_TIME - 1;
+						   EXE_tally++;
 						   break;
 				}
 			case(ADD) :
@@ -189,13 +206,16 @@ void EXE()
 			case(BEQ) :
 					  {
 						  exeTimeRemaining = EXE_OP_TIME - 1;
+						  EXE_tally++;
 						  break;
 				}
 			case(HALT) :
 					   {
-						   assert(IF_ID.halt == 1);
-						   assert(ID_EXE.halt == 1);
-						   EXE_MEM.halt = 1;
+						   //assert(IF_ID.halt == 1);
+						   //assert(ID_EXE.halt == 1);
+						   //EXE_MEM.halt = 1;
+						   //ID_EXE.halt = 1;
+						   exeTimeRemaining = 0;
 						   break;
 				}
 			default:
@@ -208,7 +228,10 @@ void EXE()
 		else
 		{
 			exeTimeRemaining--;
+			EXE_tally++;
 		}
+
+
 		if (exeTimeRemaining == 0)
 		{
 			if (EXE_MEM.writable == 1)
@@ -219,7 +242,7 @@ void EXE()
 				return;
 			}
 		}
-		EXE_tally++;
+		//EXE_tally++;
 	}
 	else
 	{
@@ -251,7 +274,7 @@ void updateEXE_MEM()
 				  ID_EXE.writable = 1;
 				  EXE_MEM.writable = 0;
 
-				  EXE_tally++;
+				  //EXE_tally++;
 				  break;
 		}
 	case(SUB) :
@@ -267,7 +290,7 @@ void updateEXE_MEM()
 				  ID_EXE.writable = 1;
 				  EXE_MEM.writable = 0;
 
-				  EXE_tally++;
+				  //EXE_tally++;
 				  break;
 		}
 	case(MULT) :
@@ -283,7 +306,7 @@ void updateEXE_MEM()
 				   ID_EXE.writable = 1;
 				   EXE_MEM.writable = 0;
 
-				   EXE_tally++;
+				   //EXE_tally++;
 				   break;
 		}
 	case(ADDI) :
@@ -299,7 +322,7 @@ void updateEXE_MEM()
 				   ID_EXE.writable = 1;
 				   EXE_MEM.writable = 0;
 
-				   EXE_tally++;
+				   //EXE_tally++;
 				   break;
 		}
 	case(LW) :
@@ -313,7 +336,7 @@ void updateEXE_MEM()
 				 ID_EXE.writable = 1;
 				 EXE_MEM.writable = 0;
 
-				 EXE_tally++;
+				 //EXE_tally++;
 				 break;
 		}
 	case(SW) :
@@ -327,7 +350,7 @@ void updateEXE_MEM()
 				 ID_EXE.writable = 1;
 				 EXE_MEM.writable = 0;
 
-				 EXE_tally++;
+				 //EXE_tally++;
 				 break;
 		}
 	case(BEQ) :
@@ -353,14 +376,24 @@ void updateEXE_MEM()
 				  ID_EXE.writable = 1;
 				  EXE_MEM.writable = 0;
 
-				  EXE_tally++;
+				  //EXE_tally++;
 				  break;
 		}
 	case(HALT) :
 			   {
 				   assert(IF_ID.halt == 1);
-				   assert(ID_EXE.halt == 1);
-				   EXE_MEM.halt = 1;
+				   //assert(ID_EXE.halt == 1);
+				   //EXE_MEM.halt = 1;
+				   EXE_MEM.opcode = opcode;
+				   EXE_MEM.regDest = 0;
+				   EXE_MEM.readData1 = 0;
+				   EXE_MEM.readData2 = 0;
+				   EXE_MEM.immediate = 0;
+				   EXE_MEM.ALUresult = 0;
+
+				   ID_EXE.writable = 1;
+				   EXE_MEM.writable = 0;
+				   ID_EXE.halt = 1;
 				   break;
 		}
 	default:
