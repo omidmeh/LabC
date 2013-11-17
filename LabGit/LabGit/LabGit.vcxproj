@@ -30,6 +30,7 @@
     <ClCompile Include="Zach.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="makefile" />
     <None Include="prog1.asy" />
     <None Include="prog2.asy" />
     <None Include="prog3.asy" />

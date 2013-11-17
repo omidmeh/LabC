@@ -83,5 +83,6 @@
     <None Include="prog1.asy">
       <Filter>%2aasy</Filter>
     </None>
+    <None Include="makefile" />
   </ItemGroup>
 </Project>
