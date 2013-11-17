@@ -60,6 +60,7 @@ instr* instructionMem;
 int regfile[25][2];
 int memory[512];
 
+int instructionCount;
 
 //Constants
 int MEM_ACCESS_TIME;

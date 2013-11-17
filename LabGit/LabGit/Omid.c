@@ -129,6 +129,7 @@ char* progScanner(char* address) {
 		if (*begPtr == '\0') continue;
 
 		*nextInstructPtr = Parser(begPtr);
+		instructionCount++;
 		nextInstructPtr++;
 	}
 	fclose(fp);

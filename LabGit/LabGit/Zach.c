@@ -25,6 +25,11 @@ void IF()
 
 	branchDistance = 0;
 
+	if (nextInstruction > instructionCount - 1 || nextInstruction < 0) {
+		printf("Error: Instruction out of bounds. \nInstruction count:%d\tInstruction accessed:%d",
+			instructionCount, nextInstruction + 1);
+		terminate();
+	}
 	IF_ID.PC = nextInstruction;
 
 	PC = (nextInstruction + 1);
@@ -92,8 +97,6 @@ void ID()
 			 {
 				 if (regfile[rs][1] == 1) return;
 
-				 assert(regfile[rs][0] % 4 == 0);
-
 				 regfile[rt][1] = 1;
 
 				 ID_EXE.opcode = opcode;
@@ -147,8 +150,10 @@ void ID()
 		}
 	case(HALT) :
 			   {
-				   //assert(IF_ID.halt == 1);
-				   //ID_EXE.halt = 1;
+				   if (ID_EXE.opcode == BEQ &&
+					   EXE_MEM.opcode == BEQ&&
+					   MEM_WB.opcode == BEQ)
+					   eoSimulation = 1;
 
 				   ID_EXE.opcode = opcode;
 				   ID_EXE.regDest = 0;
@@ -161,6 +166,10 @@ void ID()
 				   ID_EXE.writable = 0;
 
 				   IF_ID.halt = 1;
+
+
+
+
 				   break;
 		}
 	default:
