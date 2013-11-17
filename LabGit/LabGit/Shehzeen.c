@@ -27,15 +27,11 @@ void updateMEM_WB(){
 
 
 
-				 // MEM_tally++;
 				 break;
 			}
 	case(LW) :
 			 {
 				
-				 //regfile[EXE_MEM.regDest][0] = memory[EXE_MEM.readData1];
-				// regfile[EXE_MEM.regDest][1] = 0;
-
 				 assert((EXE_MEM.readData1) % 4 == 0);
 				 assert((EXE_MEM.readData1 / 4) < 512 &&
 						(EXE_MEM.readData1 / 4) >= 0);
@@ -52,7 +48,6 @@ void updateMEM_WB(){
 
 
 
-				 // MEM_tally++;
 				 break;
 
 				 break;
@@ -69,7 +64,6 @@ void updateMEM_WB(){
 				  EXE_MEM.writable = 1;
 				  MEM_WB.writable = 0;
 
-				  // MEM_tally++;
 				  break;
 			}
 	case(ADDI) :
@@ -84,7 +78,6 @@ void updateMEM_WB(){
 				   EXE_MEM.writable = 1;
 				   MEM_WB.writable = 0;
 
-				   // EXE_tally++;
 				   break;
 			}
 	case(MULT) :
@@ -111,10 +104,8 @@ void updateMEM_WB(){
 				  MEM_WB.immediate = EXE_MEM.immediate;
 
 				  MEM_WB.branchPendingFlag = 0; //0 or 1?
-				  //EXE_MEM.branchPendingFlag = 1; //do I need to set this equal to smth?
 				  MEM_WB.writable = 0;
 				  EXE_MEM.writable = 1;
-				  // MEM_tally++;
 				  break;
 			}
 	case(SUB) :
@@ -129,17 +120,13 @@ void updateMEM_WB(){
 				  EXE_MEM.writable = 1;
 				  MEM_WB.writable = 0;
 
-				  //MEM_tally++;
 				  break;
 			}
 	case(HALT) :
 			   {
 				   assert(IF_ID.halt == 1);
 				   assert(ID_EXE.halt == 1);
-				   //assert(EXE_MEM.halt == 1);
-				   //MEM_WB.halt = 1;
 				   EXE_MEM.halt = 1;
-				   //eoSimulation = 0; //endOfSimulation =0
 
 				   MEM_WB.opcode = EXE_MEM.opcode;
 				   MEM_WB.regDest = 0;
@@ -212,11 +199,9 @@ void WB(){
 		MEM_WB.writable = 1;
 		switch (MEM_WB.opcode)
 		{
-			//for halt beq and sw do nothing 
 
 		case (LW) :
 				  {
-					  //assert(regfile[MEM_WB.regDest][1] == 1);
 					  regfile[MEM_WB.regDest][0] = MEM_WB.readData1;
 					  regfile[MEM_WB.regDest][1] = 0;
 					  WB_tally++;
@@ -227,7 +212,6 @@ void WB(){
 		case (ADDI) :
 		case (MULT) :
 				   {
-					   //assert regDest !> 25
 					   regfile[MEM_WB.regDest][0] = MEM_WB.ALUresult;
 					   regfile[MEM_WB.regDest][1] = 0;
 					   WB_tally++;
@@ -241,7 +225,6 @@ void WB(){
 			assert(IF_ID.halt == 1);
 			assert(ID_EXE.halt == 1);
 			assert(EXE_MEM.halt == 1);
-			//assert(MEM_WB.halt == 1);
 			MEM_WB.halt = 1;
 			eoSimulation = 1;
 			break;

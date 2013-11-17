@@ -30,6 +30,7 @@ void IF()
 	PC = (nextInstruction + 1);
 
 	if (instructionMem[nextInstruction].opcode != HALT) IF_tally++;
+	else PC--;
 
 	IF_ID.writable = 0;
 }
@@ -42,7 +43,6 @@ void ID()
 	int    rd = instructionMem[IF_ID.PC].rd;
 	int    immediate = instructionMem[IF_ID.PC].immediate;
 
-	//if (ID_EXE.halt == HALT) return;     //  halted
 	if (IF_ID.halt == 1) return;     //  halted
 	if (ID_EXE.writable == 0)    return;     //  not writable
 	if (IF_ID.writable == 1) return;		//No new Data

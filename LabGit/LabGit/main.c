@@ -16,7 +16,7 @@
 
 char* file = "file.txt";
 int EXE_MULT_TIME   = 1;	//m
-int EXE_OP_TIME     = 4;	//n
+int EXE_OP_TIME     = 1;	//n
 int MEM_ACCESS_TIME = 1;	//c
 
 //Function Declaration
@@ -79,7 +79,7 @@ void pipeline(){
 		EXE();
 		ID(); 
 		IF(); 
-		//printAllLatch();
+		printAllLatch();
 
 		//puts("\n\n\n");
 		if (MEM_WB.halt == 0) clk++;
