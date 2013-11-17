@@ -14,16 +14,23 @@
 #endif
 
 
-char* file = "prog1.asy";
-EXE_MULT_TIME   = 1;	//m
-EXE_OP_TIME     = 4;	//n
-MEM_ACCESS_TIME = 1;	//c
+char* file = "file.txt";
+int EXE_MULT_TIME   = 1;	//m
+int EXE_OP_TIME     = 4;	//n
+int MEM_ACCESS_TIME = 1;	//c
 
 //Function Declaration
 void pipeline();
 
 
 int main(int argc, char* argv[]) {
+	if (argc == 2) file = argv[1];
+	if (argc == 5) {
+		file			= argv[1];
+		EXE_MULT_TIME	= strtol(argv[2], NULL, 10);
+		EXE_OP_TIME		= strtol(argv[3], NULL, 10);
+		MEM_ACCESS_TIME = strtol(argv[4], NULL, 10);
+	}
 	instructionMem = malloc(sizeof(instr*)* 512);
 
 	//Constants infor print

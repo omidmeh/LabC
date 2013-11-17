@@ -9,8 +9,8 @@
 
 char* validInstruc[] = { "add", "sub", "addi", "mult", "lw", "sw", "beq", "haltSimulation" };
 char* registers[] = { "$zero", "$at", "$v0", "$v1", "$a0", "$a1", "$a2", "$a3", "$t0", "$t1",
-"$t2", "$t3", "$t4", "$t5", "$t6", "$t7", "$s0", "$s1", "$s2", "$s3",
-"$s4", "$s5", "$s6", "$s7", "$t8", "$t9" };
+					  "$t2", "$t3", "$t4", "$t5", "$t6", "$t7", "$s0", "$s1", "$s2", "$s3",
+					  "$s4", "$s5", "$s6", "$s7", "$t8", "$t9" };
 
 void testEXE(){
 	//initialization
@@ -121,7 +121,7 @@ char* progScanner(char* address) {
 		if (begPtr[strlen(begPtr) - 1] == '\n')
 			begPtr[strlen(begPtr) - 1] = '\0';
 
-		if (*begPtr == '\0') continue;
+		if (*begPtr == '\0' || *begPtr == '\r') continue;
 
 		if (begPtr[strlen(begPtr) - 1] == '\r')
 			begPtr[strlen(begPtr) - 1] = '\0';
@@ -188,9 +188,10 @@ instr Parser(char* instruction) {
 		tempinstruct.rd = -1;
 
 		tempstr = strtok(NULL, delims);
-		if (isNumeric(tempstr) == 0)
-			printf("immediate is not integer: %s", tempstr);
-
+		if (isNumeric(tempstr) == 0){
+			printf("immediate is not integer: (%s) in \"%s\"", tempstr, instruction);
+			terminate();
+		}
 		int temp = (int)strtol(tempstr, NULL, 10);
 		if (temp > 32767 || temp < -32768) {
 			printf("immediate out of bound: %d", temp);
@@ -208,8 +209,10 @@ instr Parser(char* instruction) {
 		tempinstruct.rt = regToInt(tempstr);
 
 		tempstr = strtok(NULL, " ,()");
-		if (isNumeric(tempstr) == 0)
+		if (isNumeric(tempstr) == 0){
 			printf("immediate is not integer: %s", tempstr);
+			terminate();
+		}
 
 		int temp = (int)strtol(tempstr, NULL, 10);
 		if (temp > 32767 || temp < -32768) {
@@ -274,6 +277,10 @@ int isNumeric(const char * s) {
 }
 
 int regToInt(char* s) {
+	if (*s != '$'){
+		printf("regiter name undefined: (%s)", s);
+		terminate();
+	}
 	int temp;
 	assert(s != NULL);
 	//if (s == NULL) return -1;
