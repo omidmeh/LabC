@@ -13,6 +13,10 @@
       <UniqueIdentifier>{c819d91d-ff26-4147-81d0-41d80a3b6dc8}</UniqueIdentifier>
       <Extensions>c;cpp</Extensions>
     </Filter>
+    <Filter Include="%2aasy">
+      <UniqueIdentifier>{be603fea-7e79-4f86-9eea-399d13ae643f}</UniqueIdentifier>
+      <Extensions>asy</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="file.txt" />
@@ -58,6 +62,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="prog1.asy" />
+    <None Include="prog2.asy">
+      <Filter>%2aasy</Filter>
+    </None>
+    <None Include="prog3.asy">
+      <Filter>%2aasy</Filter>
+    </None>
+    <None Include="prog4.asy">
+      <Filter>%2aasy</Filter>
+    </None>
+    <None Include="prog5.asy">
+      <Filter>%2aasy</Filter>
+    </None>
+    <None Include="prog6.asy">
+      <Filter>%2aasy</Filter>
+    </None>
+    <None Include="prog7.asy">
+      <Filter>%2aasy</Filter>
+    </None>
+    <None Include="prog1.asy">
+      <Filter>%2aasy</Filter>
+    </None>
   </ItemGroup>
 </Project>

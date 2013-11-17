@@ -31,6 +31,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="prog1.asy" />
+    <None Include="prog2.asy" />
+    <None Include="prog3.asy" />
+    <None Include="prog4.asy" />
+    <None Include="prog5.asy" />
+    <None Include="prog6.asy" />
+    <None Include="prog7.asy" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B35105D3-85D3-4214-BE95-62E45ED395D9}</ProjectGuid>
