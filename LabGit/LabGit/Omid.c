@@ -335,7 +335,22 @@ void printAllLatch(){
 }
 
 int terminate(){
-	scanf("Program terminated. Press any key to exit.");
+
+	printf("\n\n\n");
+	printf("Stage Utilization statistics:\n");
+	printf("IF:\t%f\n", (float)IF_tally / (float)clk);
+	printf("ID:\t%f\n", (float)ID_tally / (float)clk);
+	printf("EXE:\t%f\n", (float)EXE_tally / (float)clk);
+	printf("MEM:\t%f\n", (float)MEM_tally / (float)clk);
+	printf("WB:\t%f\n", (float)WB_tally / (float)clk);
+
+
+
+
+
+
+	printf("Program terminated. Press any key to exit.");
+	scanf("Enter Something. lol :P");
 	exit(1);
 	return 0;
 }

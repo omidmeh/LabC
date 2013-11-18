@@ -14,7 +14,7 @@
 #endif
 
 
-char* file = "file.txt";
+char* file = "prog1.asy";
 int EXE_MULT_TIME   = 1;	//m
 int EXE_OP_TIME     = 1;	//n
 int MEM_ACCESS_TIME = 1;	//c
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 
 	pipeline();
 
-	scanf("press enter");
+	terminate();
 	return 0;
 }
 

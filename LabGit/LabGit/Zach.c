@@ -72,6 +72,11 @@ void ID()
 				  ID_EXE.immediate = 0;
 				  ID_EXE.writable = 0;
 
+				  if (rd == 0) {
+					  printf("Regsiter 'zero' is not writable in instruction %d.", IF_ID.PC + 1);
+					  terminate(0);
+				  }
+
 				  ID_tally++;
 				  break;
 		}
@@ -90,6 +95,11 @@ void ID()
 				   IF_ID.writable = 1;
 				   ID_EXE.writable = 0;
 
+				   if (rt == 0) {
+					   printf("Regsiter 'zero' is not writable in instruction %d.", IF_ID.PC + 1);
+					   terminate(0);
+				   }
+
 				   ID_tally++;
 				   break;
 		}
@@ -107,6 +117,12 @@ void ID()
 
 				 IF_ID.writable = 1;
 				 ID_EXE.writable = 0;
+
+
+				 if (rt == 0) {
+					 printf("Regsiter 'zero' is not writable in instruction %d.", IF_ID.PC + 1);
+					 terminate(0);
+				 }
 
 				 ID_tally++;
 				 break;
