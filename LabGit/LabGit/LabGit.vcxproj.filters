@@ -84,5 +84,8 @@
       <Filter>%2aasy</Filter>
     </None>
     <None Include="makefile" />
+    <None Include="..\..\..\..\..\Desktop\Function Call Graphs\Clean.xps" />
+    <None Include="..\..\..\..\..\Desktop\Function Call Graphs\With Terminate Function.xps" />
+    <None Include="..\..\..\..\..\Desktop\Function Call Graphs\With test Functions.xps" />
   </ItemGroup>
 </Project>
